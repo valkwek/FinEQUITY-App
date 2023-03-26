@@ -64,3 +64,8 @@
   width: 100%;
   max-width: 200px;
 }
+
+#back-btn {
+  display: block;
+  margin: 20px 0;
+}
