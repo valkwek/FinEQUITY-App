@@ -72,8 +72,13 @@ for (let x = 1; x <= 7; x++) {
                     .then(characterData => {
                       const characterName = characterData.name;
                       const characterStatus = characterData.status;
+                      const characterSpecies = characterData.species;
+                      const characterGender = characterData.gender;
+                      const characterOrigin = characterData.origin.name;
                       const characterLocation = characterData.location.name;
                       const characterImageUrl = characterData.image;
+                      const characterEpisodeCount = characterData.episode.length;
+
                       let notes = localStorage.getItem(characterName) || '';
 
                       const characterDetailsElement = document.createElement('div');
@@ -82,7 +87,11 @@ for (let x = 1; x <= 7; x++) {
                         <h2>${characterName}</h2>
                         <img src="${characterImageUrl}" alt="${characterName}">
                         <p>Status: ${characterStatus}</p>
+                        <p>Species: ${characterSpecies}</p>
+                        <p>Gender: ${characterGender}</p>
+                        <p>Origin: ${characterOrigin}</p>
                         <p>Location: ${characterLocation}</p>
+                        <p>Episode Count: ${characterEpisodeCount}</p>
                         <p>Notes: ${notes}</p>
                         <textarea class="notes" placeholder="Add your notes here"></textarea>
                         <button id="submit-btn">Submit</button>
