@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -52,7 +52,6 @@ for (let x = 1; x <= 7; x++) {
                 const characterName = characterData.name;
                 const characterStatus = characterData.status;
                 const characterImageUrl = characterData.image;
-                let notes = localStorage.getItem(characterName) || '';
 
                 const characterContainerElement = document.createElement('li');
                 characterContainerElement.classList.add('character-container');
@@ -104,7 +103,7 @@ for (let x = 1; x <= 7; x++) {
                             <p>Type: ${characterType}</p>
                             <p>Gender: ${characterGender}</p>
                             <p>Origin: ${characterOrigin}</p>
-                            <p>Location: ${characterLocation}</p>
+                            <p>Last Known Location: ${characterLocation}</p>
                             <p>First Seen In: ${characterEpisode}</p>
                             <p>Created: ${date.toDateString()}</p>
                             <p>Notes: ${notes}</p>

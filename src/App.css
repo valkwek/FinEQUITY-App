@@ -44,7 +44,7 @@ body {
 .character-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
   list-style-type: none;
   margin: 0;
   padding: 0;
