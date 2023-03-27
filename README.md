@@ -4,8 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Prerequisites
 Install Node.js, npm, and React before running. \
-Node.js: https://nodejs.org/en/download\
-npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\
+Node.js: https://nodejs.org/en/download \
+npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm \
 React: https://react.dev/learn/installation
 
 ## Running the Program
