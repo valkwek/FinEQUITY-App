@@ -108,7 +108,7 @@ for (let x = 1; x <= 7; x++) {
                                 <p>First Seen In: ${characterEpisode}</p>
                                 <p>Created: ${date.toDateString()}</p>
                                 <p>Notes: ${notes}</p>
-                                <textarea class="notes" placeholder="Add your notes here"></textarea>
+                                <textarea class="notes" placeholder="Update Notes Here" style="height: 4em; width: 50ch;"></textarea>
                                 <button id="submit-btn">Submit</button>
                               </div>
                             </div>
