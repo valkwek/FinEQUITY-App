@@ -2,24 +2,13 @@
 import './App.css';
 
 function App() {
-//  return (
-//    <div className="App">
-//      <header className="App-header">
-//        <img src={logo} className="App-logo" alt="logo" />
-//        <p>
-//          Rick and Morty Characters
-//        </p>
-//        <a
-//          className="App-link"
-//          href="https://rickandmortyapi.com/"
-//          target="_blank"
-//          rel="noopener noreferrer"
-//        >
-//          Rick and Morty API
-//        </a>
-//      </header>
-//    </div>
-//  );
+  return (
+    <div className="App">
+      <header className="App-header">
+      <p> Rick and Morty Characters </p>
+      </header>
+    </div>
+  );
 }
 
 const url = 'https://rickandmortyapi.com/api/location/?page=';
