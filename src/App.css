@@ -73,3 +73,10 @@ body {
   display: block;
   margin: 20px 0;
 }
+
+#submit-btn {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}

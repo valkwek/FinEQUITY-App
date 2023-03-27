@@ -70,69 +70,86 @@ for (let x = 1; x <= 7; x++) {
                   fetch(characterUrl)
                     .then(response => response.json())
                     .then(characterData => {
+                      const characterId = characterData.id;
                       const characterName = characterData.name;
                       const characterStatus = characterData.status;
                       const characterSpecies = characterData.species;
+                      const characterType = characterData.type;
                       const characterGender = characterData.gender;
                       const characterOrigin = characterData.origin.name;
                       const characterLocation = characterData.location.name;
                       const characterImageUrl = characterData.image;
-                      const characterEpisodeCount = characterData.episode.length;
+                      const characterEpisode = characterData.episode[0];
+                      const characterTime = characterData.created;
 
-                      let notes = localStorage.getItem(characterName) || '';
+                      // convert character time creation to date format
+                      const date = new Date(characterTime.slice(0, -1));
 
-                      const characterDetailsElement = document.createElement('div');
-                      characterDetailsElement.classList.add('character-details');
-                      characterDetailsElement.innerHTML = `
-                        <h2>${characterName}</h2>
-                        <img src="${characterImageUrl}" alt="${characterName}">
-                        <p>Status: ${characterStatus}</p>
-                        <p>Species: ${characterSpecies}</p>
-                        <p>Gender: ${characterGender}</p>
-                        <p>Origin: ${characterOrigin}</p>
-                        <p>Location: ${characterLocation}</p>
-                        <p>Episode Count: ${characterEpisodeCount}</p>
-                        <p>Notes: ${notes}</p>
-                        <textarea class="notes" placeholder="Add your notes here"></textarea>
-                        <button id="submit-btn">Submit</button>
-                        <button id="back-btn">Back to Characters</button>
-                      `;
-
-                      const bodyElement = document.querySelector('body');
-                      bodyElement.innerHTML = '';
-                      bodyElement.appendChild(characterDetailsElement);
-
-                      const notesElement = characterDetailsElement.querySelector('.notes');
-                      const submitBtn = document.getElementById('submit-btn');
-                      submitBtn.addEventListener("click", function() {
-                        // save the notes to local storage
-                        const notes = notesElement.value;
-                        localStorage.setItem(characterName, notes);
-
-                        // send the notes to a dummy API endpoint
-                        const endpoint = 'https://jsonplaceholder.typicode.com/posts';
-                        fetch(endpoint, {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json'
-                          },
-                          body: JSON.stringify({
-                            characterName: characterName,
-                            notes: notes
-                          })
-                        })
+                      // retrieve name of first appeared in episode
+                      fetch(characterEpisode)
                         .then(response => response.json())
                         .then(data => {
-                          console.log(data);
-                        })
-                        .catch(error => console.error(error));
-                      });
+                          const characterEpisode = data.name;
 
-                      // add event listener to back button
-                      const backBtn = document.getElementById('back-btn');
-                      backBtn.addEventListener("click", function() {
-                        window.location.href = "index.html";
-                      });
+                          let notes = localStorage.getItem(characterName) || '';
+
+                          const characterDetailsElement = document.createElement('div');
+                          characterDetailsElement.classList.add('character-details');
+                          characterDetailsElement.innerHTML = `
+                            <h2>${characterName}</h2>
+                            <img src="${characterImageUrl}" alt="${characterName}">
+                            <p>ID: ${characterId}</p>
+                            <p>Status: ${characterStatus}</p>
+                            <p>Species: ${characterSpecies}</p>
+                            <p>Type: ${characterType}</p>
+                            <p>Gender: ${characterGender}</p>
+                            <p>Origin: ${characterOrigin}</p>
+                            <p>Location: ${characterLocation}</p>
+                            <p>First Seen In: ${characterEpisode}</p>
+                            <p>Created: ${date.toDateString()}</p>
+                            <p>Notes: ${notes}</p>
+                            <textarea class="notes" placeholder="Add your notes here"></textarea>
+                            <button id="submit-btn">Submit</button>
+                            <button id="back-btn">Back to Characters</button>
+                          `;
+
+                          const bodyElement = document.querySelector('body');
+                          bodyElement.innerHTML = '';
+                          bodyElement.appendChild(characterDetailsElement);
+
+                          const notesElement = characterDetailsElement.querySelector('.notes');
+                          const submitBtn = document.getElementById('submit-btn');
+                          submitBtn.addEventListener("click", function() {
+                            // save the notes to local storage
+                            const notes = notesElement.value;
+                            localStorage.setItem(characterName, notes);
+
+                            // send the notes to a dummy API endpoint
+                            const endpoint = 'https://jsonplaceholder.typicode.com/posts';
+                            fetch(endpoint, {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify({
+                                characterName: characterName,
+                                notes: notes
+                              })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                              console.log(data);
+                            })
+                            .catch(error => console.error(error));
+                          });
+
+                          // add event listener to back button
+                          const backBtn = document.getElementById('back-btn');
+                          backBtn.addEventListener("click", function() {
+                            window.location.href = "index.html";
+                          });
+                      })
+                      .catch(error => console.error(error));
                     })
                     .catch(error => console.error(error));
                 });
