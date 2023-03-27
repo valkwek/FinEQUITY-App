@@ -22,125 +22,129 @@ function App() {
 //  );
 }
 
-const url = 'https://rickandmortyapi.com/api/location/';
+const url = 'https://rickandmortyapi.com/api/location/?page=';
 
-// fetch data for all locations from the API
-fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    // loop through each location and display its name and characters
-    const locations = data.results;
-    for (let i = 0; i < locations.length; i++) {
-      const location = locations[i];
+// fetch data for all locations from the API - iterate through all 7 pages
+for (let x = 1; x <= 7; x++) {
+    const newUrl = url + String(x);
+    fetch(newUrl)
+      .then(response => response.json())
+      .then(data => {
+        // loop through each location and display its name and characters
+        const locations = data.results;
 
-      const nameElement = document.createElement('h1');
-      nameElement.textContent = `Location: ${location.name}`;
+        for (let i = 0; i < locations.length; i++) {
+          const location = locations[i];
 
-      const charactersElement = document.createElement('ul');
-      charactersElement.classList.add('character-list');
+          const nameElement = document.createElement('h1');
+          nameElement.textContent = `Location: ${location.name}`;
 
-      // loop through each character in the location and display their name, status, and image
-      const characters = location.residents;
-      for (let j = 0; j < characters.length; j++) {
-        const characterUrl = characters[j];
-        fetch(characterUrl)
-          .then(response => response.json())
-          .then(characterData => {
-            const characterName = characterData.name;
-            const characterStatus = characterData.status;
-            const characterImageUrl = characterData.image;
-            let notes = localStorage.getItem(characterName) || '';
+          const charactersElement = document.createElement('ul');
+          charactersElement.classList.add('character-list');
 
-            const characterContainerElement = document.createElement('li');
-            characterContainerElement.classList.add('character-container');
+          // loop through each character in the location and display their name, status, and image
+          const characters = location.residents;
+          for (let j = 0; j < characters.length; j++) {
+            const characterUrl = characters[j];
+            fetch(characterUrl)
+              .then(response => response.json())
+              .then(characterData => {
+                const characterName = characterData.name;
+                const characterStatus = characterData.status;
+                const characterImageUrl = characterData.image;
+                let notes = localStorage.getItem(characterName) || '';
 
-            const characterElement = document.createElement('div');
-            characterElement.classList.add('character');
-            characterElement.textContent = `${characterName} - ${characterStatus}`;
+                const characterContainerElement = document.createElement('li');
+                characterContainerElement.classList.add('character-container');
 
-            const characterImageElement = document.createElement('img');
-            characterImageElement.src = characterImageUrl;
+                const characterElement = document.createElement('div');
+                characterElement.classList.add('character');
+                characterElement.textContent = `${characterName} - ${characterStatus}`;
 
-            // add event listener to container element
-            characterContainerElement.addEventListener('click', () => {
-              // fetch character data and display it on a new page
-              fetch(characterUrl)
-                .then(response => response.json())
-                .then(characterData => {
-                  const characterName = characterData.name;
-                  const characterStatus = characterData.status;
-                  const characterLocation = characterData.location.name;
-                  const characterImageUrl = characterData.image;
-                  let notes = localStorage.getItem(characterName) || '';
+                const characterImageElement = document.createElement('img');
+                characterImageElement.src = characterImageUrl;
 
-                  const characterDetailsElement = document.createElement('div');
-                  characterDetailsElement.classList.add('character-details');
-                  characterDetailsElement.innerHTML = `
-                    <h2>${characterName}</h2>
-                    <img src="${characterImageUrl}" alt="${characterName}">
-                    <p>Status: ${characterStatus}</p>
-                    <p>Location: ${characterLocation}</p>
-                    <p>Notes: ${notes}</p>
-                    <textarea class="notes" placeholder="Add your notes here"></textarea>
-                    <button id="submit-btn">Submit</button>
-                    <button id="back-btn">Back to Characters</button>
-                  `;
-
-                  const bodyElement = document.querySelector('body');
-                  bodyElement.innerHTML = '';
-                  bodyElement.appendChild(characterDetailsElement);
-
-                  const notesElement = characterDetailsElement.querySelector('.notes');
-                  const submitBtn = document.getElementById('submit-btn');
-                  submitBtn.addEventListener("click", function() {
-                    // save the notes to local storage
-                    const notes = notesElement.value;
-                    localStorage.setItem(characterName, notes);
-
-                    // send the notes to a dummy API endpoint
-                    const endpoint = 'https://jsonplaceholder.typicode.com/posts';
-                    fetch(endpoint, {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                        characterName: characterName,
-                        notes: notes
-                      })
-                    })
+                // add event listener to container element
+                characterContainerElement.addEventListener('click', () => {
+                  // fetch character data and display it on a new page
+                  fetch(characterUrl)
                     .then(response => response.json())
-                    .then(data => {
-                      console.log(data);
+                    .then(characterData => {
+                      const characterName = characterData.name;
+                      const characterStatus = characterData.status;
+                      const characterLocation = characterData.location.name;
+                      const characterImageUrl = characterData.image;
+                      let notes = localStorage.getItem(characterName) || '';
+
+                      const characterDetailsElement = document.createElement('div');
+                      characterDetailsElement.classList.add('character-details');
+                      characterDetailsElement.innerHTML = `
+                        <h2>${characterName}</h2>
+                        <img src="${characterImageUrl}" alt="${characterName}">
+                        <p>Status: ${characterStatus}</p>
+                        <p>Location: ${characterLocation}</p>
+                        <p>Notes: ${notes}</p>
+                        <textarea class="notes" placeholder="Add your notes here"></textarea>
+                        <button id="submit-btn">Submit</button>
+                        <button id="back-btn">Back to Characters</button>
+                      `;
+
+                      const bodyElement = document.querySelector('body');
+                      bodyElement.innerHTML = '';
+                      bodyElement.appendChild(characterDetailsElement);
+
+                      const notesElement = characterDetailsElement.querySelector('.notes');
+                      const submitBtn = document.getElementById('submit-btn');
+                      submitBtn.addEventListener("click", function() {
+                        // save the notes to local storage
+                        const notes = notesElement.value;
+                        localStorage.setItem(characterName, notes);
+
+                        // send the notes to a dummy API endpoint
+                        const endpoint = 'https://jsonplaceholder.typicode.com/posts';
+                        fetch(endpoint, {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({
+                            characterName: characterName,
+                            notes: notes
+                          })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                          console.log(data);
+                        })
+                        .catch(error => console.error(error));
+                      });
+
+                      // add event listener to back button
+                      const backBtn = document.getElementById('back-btn');
+                      backBtn.addEventListener("click", function() {
+                        window.location.href = "index.html";
+                      });
                     })
                     .catch(error => console.error(error));
-                  });
+                });
 
-                  // add event listener to back button
-                  const backBtn = document.getElementById('back-btn');
-                  backBtn.addEventListener("click", function() {
-                    window.location.href = "index.html";
-                  });
-                })
-                .catch(error => console.error(error));
-            });
+                characterContainerElement.appendChild(characterImageElement);
+                characterContainerElement.appendChild(characterElement);
+                charactersElement.appendChild(characterContainerElement);
+              })
+              .catch(error => console.error(error));
+          }
 
-            characterContainerElement.appendChild(characterImageElement);
-            characterContainerElement.appendChild(characterElement);
-            charactersElement.appendChild(characterContainerElement);
-          })
-          .catch(error => console.error(error));
-      }
+          // add the elements to the page
+          const locationElement = document.createElement('div');
+          locationElement.appendChild(nameElement);
+          locationElement.appendChild(charactersElement);
 
-      // add the elements to the page
-      const locationElement = document.createElement('div');
-      locationElement.appendChild(nameElement);
-      locationElement.appendChild(charactersElement);
-
-      const appElement = document.getElementById('app');
-      appElement.appendChild(locationElement);
+          const appElement = document.getElementById('app');
+          appElement.appendChild(locationElement);
+        }
+      })
+      .catch(error => console.error(error));
     }
-  })
-  .catch(error => console.error(error));
 
 export default App;

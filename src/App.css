@@ -37,6 +37,10 @@
   }
 }
 
+body {
+  margin: 0 20px;
+}
+
 .character-list {
   display: flex;
   flex-wrap: wrap;
