@@ -69,7 +69,6 @@ for (let x = 1; x <= 7; x++) {
                   fetch(characterUrl)
                     .then(response => response.json())
                     .then(characterData => {
-                      const characterId = characterData.id;
                       const characterName = characterData.name;
                       const characterStatus = characterData.status;
                       const characterSpecies = characterData.species;
@@ -95,22 +94,32 @@ for (let x = 1; x <= 7; x++) {
                           const characterDetailsElement = document.createElement('div');
                           characterDetailsElement.classList.add('character-details');
                           characterDetailsElement.innerHTML = `
-                            <h2>${characterName}</h2>
-                            <img src="${characterImageUrl}" alt="${characterName}">
-                            <p>ID: ${characterId}</p>
-                            <p>Status: ${characterStatus}</p>
-                            <p>Species: ${characterSpecies}</p>
-                            <p>Type: ${characterType}</p>
-                            <p>Gender: ${characterGender}</p>
-                            <p>Origin: ${characterOrigin}</p>
-                            <p>Last Known Location: ${characterLocation}</p>
-                            <p>First Seen In: ${characterEpisode}</p>
-                            <p>Created: ${date.toDateString()}</p>
-                            <p>Notes: ${notes}</p>
-                            <textarea class="notes" placeholder="Add your notes here"></textarea>
-                            <button id="submit-btn">Submit</button>
                             <button id="back-btn">Back to Characters</button>
+                            <h2>${characterName}</h2>
+                            <div class="details-container">
+                              <img src="${characterImageUrl}" alt="${characterName}" id="detail_image">
+                              <div class="text-container">
+                                <p>Status: ${characterStatus}</p>
+                                <p>Species: ${characterSpecies}</p>
+                                <p>Type: ${characterType}</p>
+                                <p>Gender: ${characterGender}</p>
+                                <p>Origin: ${characterOrigin}</p>
+                                <p>Last Known Location: ${characterLocation}</p>
+                                <p>First Seen In: ${characterEpisode}</p>
+                                <p>Created: ${date.toDateString()}</p>
+                                <p>Notes: ${notes}</p>
+                                <textarea class="notes" placeholder="Add your notes here"></textarea>
+                                <button id="submit-btn">Submit</button>
+                              </div>
+                            </div>
                           `;
+
+                          // set styles for image and container div
+                          const detailImage = characterDetailsElement.querySelector("#detail_image");
+                          const textContainer = characterDetailsElement.querySelector(".text-container");
+                          detailImage.style.float = "left";
+                          detailImage.style.marginRight = "20px";
+                          textContainer.style.overflow = "hidden";
 
                           const bodyElement = document.querySelector('body');
                           bodyElement.innerHTML = '';
