@@ -82,6 +82,7 @@ fetch(url)
                     <p>Location: ${characterLocation}</p>
                     <p>Notes: ${notes}</p>
                     <textarea class="notes" placeholder="Add your notes here"></textarea>
+                    <button id="submit-btn">Submit</button>
                     <button id="back-btn">Back to Characters</button>
                   `;
 
@@ -90,7 +91,8 @@ fetch(url)
                   bodyElement.appendChild(characterDetailsElement);
 
                   const notesElement = characterDetailsElement.querySelector('.notes');
-                  notesElement.addEventListener('change', () => {
+                  const submitBtn = document.getElementById('submit-btn');
+                  submitBtn.addEventListener("click", function() {
                     // save the notes to local storage
                     const notes = notesElement.value;
                     localStorage.setItem(characterName, notes);
