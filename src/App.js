@@ -116,9 +116,8 @@ fetch(url)
 
                   // add event listener to back button
                   const backBtn = document.getElementById('back-btn');
-                  backBtn.addEventListener('click', () => {
-                    bodyElement.innerHTML = '';
-                    bodyElement.appendChild(locationElement);
+                  backBtn.addEventListener("click", function() {
+                    window.location.href = "index.html";
                   });
                 })
                 .catch(error => console.error(error));
