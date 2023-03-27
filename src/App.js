@@ -67,10 +67,6 @@ for (let x = 1; x <= 7; x++) {
                       const characterLocation = characterData.location.name;
                       const characterImageUrl = characterData.image;
                       const characterEpisode = characterData.episode[0];
-                      const characterTime = characterData.created;
-
-                      // convert character time creation to date format
-                      const date = new Date(characterTime.slice(0, -1));
 
                       // retrieve name of first appeared in episode
                       fetch(characterEpisode)
@@ -95,7 +91,6 @@ for (let x = 1; x <= 7; x++) {
                                 <p>Origin: ${characterOrigin}</p>
                                 <p>Last Known Location: ${characterLocation}</p>
                                 <p>First Seen In: ${characterEpisode}</p>
-                                <p>Created: ${date.toDateString()}</p>
                                 <p>Notes: ${notes}</p>
                                 <textarea class="notes" placeholder="Update Notes Here" style="height: 4em; width: 50ch;"></textarea>
                                 <button id="submit-btn">Submit</button>
